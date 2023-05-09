@@ -23,7 +23,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        dd("create");
+        return view('tasks.create');
     }
 
     /**
@@ -31,7 +31,7 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
