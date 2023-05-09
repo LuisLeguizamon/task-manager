@@ -3,7 +3,7 @@
 @section('title', 'Create Task')
 
 @section('content')
-    <form method="POST" action="{{ route('tasks.store') }}" class="max-w-sm mx-auto my-8">
+    <form method="POST" action="{{ route('tasks.store') }}" class="max-w-sm mx-auto my-8 bg-white p-10 border border-none rounded-lg">
         @csrf
 
         <div class="mb-6">
