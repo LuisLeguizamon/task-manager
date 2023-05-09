@@ -34,11 +34,11 @@
                 <div class="mt-16 text-center">
                     <ul>
                         @if ($tasks)
-                            <li>No tasks found</li>                            
-                        @else
                             @foreach ($tasks as $task)
                                 <li>{{ $task->name }}</li>
                             @endforeach
+                        @else
+                            <li>No tasks found</li>
                         @endif
                     </ul>
                 </div>
