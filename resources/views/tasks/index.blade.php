@@ -26,9 +26,8 @@
                 
                 <div class="mt-12 text-center">
                     <a href="{{ route('tasks.create') }}"
-                        class="bg-white border border-none rounded-lg px-5 font-semibold text-gray-600 hover:text-gray-900 p-5
-                               hover:bg-grey-100 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                        + Create Task
+                        class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-blue-8000">
+                        Create Task
                     </a>
                 </div>
 
