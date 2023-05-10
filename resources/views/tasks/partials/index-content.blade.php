@@ -16,7 +16,8 @@
                 @if ($tasks)
                     @foreach ($tasks as $task)
                         <li data-task-id="{{ $task->id }}"
-                            class="sortable-item bg-white border border-none font-semibold mb-5 p-5 w-full">
+                            class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
+                                    hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
                             <p class="text-left">
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                                     {{ $task->priority}}
