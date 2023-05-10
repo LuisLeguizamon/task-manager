@@ -12,8 +12,8 @@
         </div>
 
         <div class="mt-8 text-center">
-            <ul id="sortable">
-                @if ($tasks)
+            @if ($tasks)
+                <ul id="sortable">
                     @foreach ($tasks as $task)
                         <li data-task-id="{{ $task->id }}"
                             class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
@@ -53,10 +53,10 @@
                             </div>
                         </li>
                     @endforeach
-                @else
-                    <li>No tasks found</li>
-                @endif
-            </ul>
+                </ul>
+            @else
+                <h5>No tasks found</h5>
+            @endif
         </div>
     </div>
 </div>
