@@ -1,7 +1,7 @@
 # task-management
 
 ### Description
-* 
+* Create/edit/order tasks.
 
 ### Instalation
 * Clone this repository
