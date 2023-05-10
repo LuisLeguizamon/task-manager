@@ -71,4 +71,6 @@
 
     @include('tasks.partials.index-scripts')
 
+    @include('footer')
 </html>
+
