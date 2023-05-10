@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PriorityTaskController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'tasks', 301);
 
 Route::resource('tasks', TaskController::class);
+
+Route::put('priority/update', [PriorityTaskController::class, 'update'])->name('priority.update');
