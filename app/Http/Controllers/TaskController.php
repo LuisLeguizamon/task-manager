@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\Task\CreateTask;
+use App\Services\Task\DeleteTask;
 use App\Services\Task\UpdateTask;
 
 class TaskController extends Controller
@@ -69,6 +70,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        app(DeleteTask::class)->execute($task);
+
+        return redirect(route('tasks.index'));
     }
 }
