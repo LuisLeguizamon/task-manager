@@ -23,7 +23,7 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'priority' => 'required',
+            'priority' => 'required | integer | min:1',
         ];
     }
 }
