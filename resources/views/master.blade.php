@@ -6,7 +6,9 @@
     <body class="bg-gray-100">
         <div>
             <div class="my-8 flex justify-center">
-                <img src="/logo_tasks.png" alt="">
+                <a href="/">
+                    <img src="/logo_tasks.png" alt="">
+                </a>
             </div>
             @yield('content')
         </div>
