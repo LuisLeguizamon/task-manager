@@ -20,18 +20,17 @@
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white">
 
             <div class="max-w-7xl mx-auto">
-                <div class="flex justify-center">
-                    <img src="/logo_tasks.png" alt="logo" width="50%">
+                <div class="mt-4">
+                    <img class="mx-auto" src="/logo_tasks.png" alt="logo" width="50px">
                 </div>
-                
-                <div class="mt-12 text-center">
+                <div class="mt-8 text-center">
                     <a href="{{ route('tasks.create') }}"
                         class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-blue-8000">
                         Create Task
                     </a>
                 </div>
 
-                <div class="mt-10 text-center">
+                <div class="mt-8 text-center">
                     <ul>
                         @if ($tasks)
                             @foreach ($tasks as $task)
