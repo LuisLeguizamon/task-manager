@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\Task\CreateTask;
+use App\Services\Task\UpdateTask;
 
 class TaskController extends Controller
 {
@@ -50,7 +51,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', ['task' => $task]);
     }
 
     /**
@@ -58,7 +59,9 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        app(UpdateTask::class)->execute($request->validated(), $task);
+
+        return redirect(route('tasks.index'));
     }
 
     /**
