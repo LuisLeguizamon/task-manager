@@ -1,7 +1,7 @@
 <html>
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Tasks Management</title>
+        <title>Task Manager</title>
         @vite(['resources/js/app.js'])
     </head>
 
