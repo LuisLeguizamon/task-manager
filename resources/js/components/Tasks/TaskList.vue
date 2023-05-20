@@ -6,7 +6,7 @@
         </router-link>
     </div>
     <div class="sm:flex min-h-screen pt-5">
-        <ul class="max-w-7xl mx-auto">
+        <ul v-if="tasks" class="max-w-7xl mx-auto">
             <li v-for="task in tasks"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
                         hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
@@ -40,6 +40,9 @@
                 </div>
             </li>
         </ul>
+        <div v-else class="max-w-7xl mx-auto">
+            <h1>No tasks found</h1>
+        </div>
     </div>
 </template>
 <script>
