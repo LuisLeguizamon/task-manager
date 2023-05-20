@@ -57,7 +57,9 @@ export default {
     created() {
         axios.get('/api/tasks')
             .then((response) => {
-                this.tasks = response.data;
+                if (response.data.length > 0) {
+                    this.tasks = response.data;
+                }
             })
             .catch((error) => {
                 console.log(error);
