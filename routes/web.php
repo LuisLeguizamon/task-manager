@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', 'tasks', 301);
 
-Route::resource('tasks', TaskController::class);
-
-Route::put('priority/update', [PriorityTaskController::class, 'update'])->name('priority.update');
+Route::get('{path}', function () {
+    return view('master');
+})->where('path', '.*');

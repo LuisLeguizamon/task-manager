@@ -16,9 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::getTasksOrdered();
-
-        return view('tasks.index', ['tasks' => $tasks->isNotEmpty() ? $tasks : null]);
+        return Task::getTasksOrdered();
     }
 
     /**
@@ -36,7 +34,7 @@ class TaskController extends Controller
     {
         app(CreateTask::class)->execute($request->validated());
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 
     /**
@@ -52,7 +50,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', ['task' => $task]);
+        return response()->json(['task' => $task]);
     }
 
     /**
@@ -62,7 +60,7 @@ class TaskController extends Controller
     {
         app(UpdateTask::class)->execute($request->validated(), $task);
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 
     /**
@@ -72,6 +70,6 @@ class TaskController extends Controller
     {
         app(DeleteTask::class)->execute($task);
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 }
