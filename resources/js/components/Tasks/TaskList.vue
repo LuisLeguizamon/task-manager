@@ -1,19 +1,19 @@
 <template>
     <div class="sm:flex min-h-screen pt-5">
         <ul class="max-w-7xl mx-auto">
-            <li
+            <li v-for="task in tasks"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
                         hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
                 <p class="text-left">
                     <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                        Task Priority
+                        {{ task.priority }}
                     </span>
                 </p>
                 <span>
-                    Task Name
+                    {{ task.name }}
                 </span>
                 <span class="bg-gray-100 text-gray-500 text-xs font-normal mr-2 px-1 py-0.5 rounded">
-                    Task ID
+                    {{ task.id }}
                 </span>
                 <div class="mt-5 grid grid-cols-12">
                     <div class="my-auto">
@@ -36,3 +36,24 @@
         </ul>
     </div>
 </template>
+<script>
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            tasks: null,
+        }
+    },
+    created() {
+        axios.get('/api/tasks')
+            .then((response) => {
+                this.tasks = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Error");
+            })
+    }
+}
+</script>
