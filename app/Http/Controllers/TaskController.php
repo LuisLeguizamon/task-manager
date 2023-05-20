@@ -34,7 +34,7 @@ class TaskController extends Controller
     {
         app(CreateTask::class)->execute($request->validated());
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 
     /**
