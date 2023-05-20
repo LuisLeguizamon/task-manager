@@ -70,6 +70,6 @@ class TaskController extends Controller
     {
         app(DeleteTask::class)->execute($task);
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 }
