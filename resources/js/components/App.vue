@@ -1,7 +1,7 @@
 <template>
     <div class="my-3 flex justify-center">
         <a href="/">
-            <img width="100" src="/logo_tasks.png">
+            <img width="100" src="/public/logo_tasks.png">
         </a>
     </div>
     <div class="text-center">
