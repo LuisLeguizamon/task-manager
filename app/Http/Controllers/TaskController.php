@@ -50,7 +50,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', ['task' => $task]);
+        return response()->json(['task' => $task]);
     }
 
     /**
@@ -60,7 +60,7 @@ class TaskController extends Controller
     {
         app(UpdateTask::class)->execute($request->validated(), $task);
 
-        return redirect(route('tasks.index'));
+        return response()->json(['error' => false]);
     }
 
     /**

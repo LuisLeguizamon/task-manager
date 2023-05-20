@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import TaskList from '../components/Tasks/TaskList.vue';
-import TaskCreate from '../components/Tasks/TaskCreate.vue';
+import TaskForm from '../components/Tasks/TaskForm.vue';
 
 const routes = [
     {
@@ -10,7 +10,11 @@ const routes = [
     },
     {
         path: "/tasks/create",
-        component: TaskCreate
+        component: TaskForm
+    },
+    {
+        path: "/tasks/edit/:id",
+        component: TaskForm
     },
 ];
 

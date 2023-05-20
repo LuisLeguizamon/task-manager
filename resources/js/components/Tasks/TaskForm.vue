@@ -14,7 +14,8 @@
 
         <button
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-            Create Task
+            <span v-if="editForm">Edit Task</span>
+            <span v-else>Create Task</span>
         </button>
     </form>
 </template>
@@ -24,19 +25,48 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            form: {}
+            form: {},
+            editForm: false,
+        }
+    },
+    created()
+    {
+        if (this.$route.params.hasOwnProperty('id')) {
+            this.editForm = true;
+            this.getData();
         }
     },
     methods: {
-        handleSubmit() {
-            axios.post('/api/tasks', this.form)
+        getData() {
+            axios.get('/api/tasks/' + this.$route.params.id + '/edit')
                 .then((response) => {
-                    this.$router.push('/tasks');
+                    this.form = response.data.task;
                 })
                 .catch((error) => {
                     console.log(error);
                     alert("Error");
                 });
+        },
+        handleSubmit() {
+            if (this.editForm) {
+                axios.put('/api/tasks/' + this.$route.params.id, this.form)
+                    .then((response) => {
+                        this.$router.push('/tasks');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        alert("Error");
+                    })          
+            } else {
+                axios.post('/api/tasks', this.form)
+                    .then((response) => {
+                        this.$router.push('/tasks');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        alert("Error");
+                    });
+            }
         }
     },
 }
