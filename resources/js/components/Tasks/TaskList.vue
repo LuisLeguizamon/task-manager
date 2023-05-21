@@ -65,6 +65,7 @@ export default {
             axios.post('/api/tasks', this.form)
                     .then(() => {
                         this.getTasks();
+                        this.form.name = null;
                     })
                     .catch((error) => {
                         console.log(error);
