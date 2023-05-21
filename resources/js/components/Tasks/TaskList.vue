@@ -1,9 +1,11 @@
 <template>
-    <div class="max-w-7xl mx-auto">
-        <router-link to="/tasks/create"
-            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-blue-8000">
-            Create Task
-        </router-link>
+    <div class="max-w-7xl mx-auto text-center">
+        <input v-model="form.name" name="name" type="text" required
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-5 py-2.5 mr-2 mb-2">
+        <button @click="addTask()"
+            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+            Add Task
+        </button>
     </div>
     <div class="sm:flex min-h-screen pt-5">
         <ul v-if="tasks" class="max-w-7xl mx-auto">
@@ -51,6 +53,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            form: {},
             tasks: null,
         }
     },
@@ -67,6 +70,16 @@ export default {
             })
     },
     methods: {
+        addTask() {
+            axios.post('/api/tasks', this.form)
+                    .then(() => {
+                        this.$router.go();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        alert("Error");
+                    });
+        },
         deleteItem(taskId) {
             axios.delete('/api/tasks/' + taskId)
                 .then(() => {
