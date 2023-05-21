@@ -58,22 +58,13 @@ export default {
         }
     },
     created() {
-        axios.get('/api/tasks')
-            .then((response) => {
-                if (response.data.length > 0) {
-                    this.tasks = response.data;
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                alert("Error");
-            })
+        this.getTasks();
     },
     methods: {
         addTask() {
             axios.post('/api/tasks', this.form)
                     .then(() => {
-                        this.$router.go();
+                        this.getTasks();
                     })
                     .catch((error) => {
                         console.log(error);
@@ -83,13 +74,25 @@ export default {
         deleteItem(taskId) {
             axios.delete('/api/tasks/' + taskId)
                 .then(() => {
-                    this.$router.go();
+                    this.getTasks();
                 })
                 .catch((error) => {
                     console.log(error);
                     alert("Error");
                 })
-        }
+        },
+        getTasks() {
+            axios.get('/api/tasks')
+            .then((response) => {
+                if (response.data.length > 0) {
+                    this.tasks = response.data;
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Error");
+            })
+        },
     }
 }
 </script>
