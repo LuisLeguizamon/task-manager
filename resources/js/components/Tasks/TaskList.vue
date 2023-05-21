@@ -63,11 +63,7 @@ export default {
     },
     watch: {
         'form.name'(newValue) {
-            if (newValue == '' || newValue == ' ' || newValue == null) {
-                this.disableAddTask = true;
-            } else {
-                this.disableAddTask = false;
-            }
+            this.disableAddTask = !(newValue && newValue.trim());
         }
     },
     created() {
