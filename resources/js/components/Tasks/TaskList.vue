@@ -23,9 +23,6 @@
                 <span>
                     {{ task.name }}
                 </span>
-                <span class="bg-gray-100 text-gray-500 text-xs font-normal mr-2 px-1 py-0.5 rounded">
-                    {{ task.id }}
-                </span>
                 <div class="mt-5 grid grid-cols-12">
                     <div class="my-auto">
                         <router-link :to="{ path: '/tasks/edit/'+task.id }">
