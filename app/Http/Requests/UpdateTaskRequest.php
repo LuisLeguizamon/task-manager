@@ -23,7 +23,6 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'priority' => 'required | integer | min:1',
         ];
     }
 }
