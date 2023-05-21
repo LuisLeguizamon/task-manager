@@ -12,7 +12,7 @@
     </div>
     <div class="sm:flex min-h-screen pt-5">
         <ul v-if="tasks" class="max-w-7xl mx-auto">
-            <li v-for="task in tasks"
+            <li v-for="(task, index) in tasks"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
                         hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
                 <p class="text-left">
@@ -20,19 +20,23 @@
                         {{ task.priority }}
                     </span>
                 </p>
-                <span>
-                    {{ task.name }}
-                </span>
-                <span class="bg-gray-100 text-gray-500 text-xs font-normal mr-2 px-1 py-0.5 rounded">
-                    {{ task.id }}
-                </span>
+
+                <input v-if="task.edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <span v-else>{{ task.name }}</span>
+
                 <div class="mt-5 grid grid-cols-12">
                     <div class="my-auto">
-                        <router-link :to="{ path: '/tasks/edit/'+task.id }">
+                        <button v-if="task.edit_item"
+                                @click="updateTask(task.id, index)"
+                                class="border border-none text-white bg-blue-950 hover:bg-blue-900 font-medium px-3 py-1">
+                            Update
+                        </button>
+                        <button v-else
+                                @click="allowEdition(index)">
                             <svg class="w-4 h-4 mx-auto hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
                                 </svg>
-                        </router-link>
+                        </button>
                     </div>
                     <div class="my-auto border border-none rounded-lg p-2">
                         <button @click="deleteItem(task.id)">
@@ -81,6 +85,10 @@ export default {
                         alert("Error");
                     });
         },
+        allowEdition(index) {
+            this.disableEditionOfTasks();
+            this.tasks[index].edit_item = true;
+        },
         deleteItem(taskId) {
             axios.delete('/api/tasks/' + taskId)
                 .then(() => {
@@ -91,11 +99,17 @@ export default {
                     alert("Error");
                 })
         },
+        disableEditionOfTasks() {
+            this.tasks.forEach((task) => {
+                task.edit_item = false;
+            })
+        },
         getTasks() {
             axios.get('/api/tasks')
             .then((response) => {
                 if (response.data.length > 0) {
                     this.tasks = response.data;
+                    this.disableEditionOfTasks();
                 }
             })
             .catch((error) => {
@@ -103,6 +117,16 @@ export default {
                 alert("Error");
             })
         },
+        updateTask(taskId, index) {
+            axios.put('/api/tasks/' + taskId, this.tasks[index])
+                .then(() => {
+                    this.getTasks();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert("Error");
+                })
+        }
     }
 }
 </script>
