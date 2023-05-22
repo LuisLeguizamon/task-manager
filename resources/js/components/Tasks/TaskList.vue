@@ -99,7 +99,7 @@ onCreate();
                     </span>
                 </p>
 
-                <input v-if="task.edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <input v-if="task.edit_item" autofocus type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
                 <span v-else>{{ task.name }}</span>
 
                 <div class="mt-5 grid grid-cols-12">
