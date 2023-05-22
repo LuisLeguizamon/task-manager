@@ -11,10 +11,8 @@
 </script>
 <template>
     <template v-if="showContent">
-        <div class="my-3 flex justify-center">
-            <a href="/">
-                <img width="100" src="/public/logo_tasks.png">
-            </a>
+        <div class="bg-white text-blue-950 flex mb-5 p-3 font-bold tracking-wide uppercase">
+            Task manager
         </div>
         <div class="text-center">
             <router-view></router-view>
