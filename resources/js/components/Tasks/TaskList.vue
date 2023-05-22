@@ -1,3 +1,89 @@
+<script setup>
+import axios from 'axios';
+import { nextTick, ref, watch } from 'vue';
+
+const disableAddTask = ref(true);
+const editInputRefs = ref([]);
+const form = ref({});
+const tasks = ref(null);
+
+watch(form.value, (newValue) => {
+    disableAddTask.value = !(newValue.name && newValue.name.trim());
+})
+
+function addTask() {
+    axios.post('/api/tasks', form.value)
+        .then(() => {
+            getTasks();
+            form.value.name = null;
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        });
+};
+
+function allowEdition(index) {
+    disableEditionOfTasks();
+    tasks.value[index].edit_item = true;
+    focusItem(index);
+};
+
+async function focusItem(index)
+{
+    await nextTick();//need to use this utility to wait that the element with v-if (the edit input) is "updated" in DOM
+    editInputRefs.value[index].children[1].focus();//the second element (children[1]) is the edit input
+}
+
+function deleteItem(taskId) {
+    axios.delete('/api/tasks/' + taskId)
+        .then(() => {
+            getTasks();
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+};
+
+function disableEditionOfTasks() {
+    tasks.value.forEach((task) => {
+        task.edit_item = false;
+    })
+};
+
+function getTasks() {
+    axios.get('/api/tasks')
+        .then((response) => {
+            if (response.data.length > 0) {
+                tasks.value = response.data;
+                disableEditionOfTasks();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+};
+
+function updateTask(taskId, index) {
+    axios.put('/api/tasks/' + taskId, tasks.value[index])
+        .then(() => {
+            getTasks();
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+}
+
+function onCreate() {
+    getTasks();
+}
+
+onCreate();
+</script>
+
 <template>
     <div class="max-w-7xl mx-auto text-center">
         <input v-model="form.name" name="name" type="text" required
@@ -13,6 +99,7 @@
     <div class="sm:flex min-h-screen pt-5">
         <ul v-if="tasks" class="max-w-7xl mx-auto">
             <li v-for="(task, index) in tasks"
+                ref="editInputRefs"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
                         hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
                 <p class="text-left">
@@ -21,7 +108,7 @@
                     </span>
                 </p>
 
-                <input v-if="task.edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
                 <span v-else>{{ task.name }}</span>
 
                 <div class="mt-5 grid grid-cols-12">
@@ -54,79 +141,3 @@
         </div>
     </div>
 </template>
-<script>
-import axios from 'axios';
-
-export default {
-    data() {
-        return {
-            disableAddTask: true,
-            form: {},
-            tasks: null,
-        }
-    },
-    watch: {
-        'form.name'(newValue) {
-            this.disableAddTask = !(newValue && newValue.trim());
-        }
-    },
-    created() {
-        this.getTasks();
-    },
-    methods: {
-        addTask() {
-            axios.post('/api/tasks', this.form)
-                    .then(() => {
-                        this.getTasks();
-                        this.form.name = null;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        alert("Error");
-                    });
-        },
-        allowEdition(index) {
-            this.disableEditionOfTasks();
-            this.tasks[index].edit_item = true;
-        },
-        deleteItem(taskId) {
-            axios.delete('/api/tasks/' + taskId)
-                .then(() => {
-                    this.getTasks();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert("Error");
-                })
-        },
-        disableEditionOfTasks() {
-            this.tasks.forEach((task) => {
-                task.edit_item = false;
-            })
-        },
-        getTasks() {
-            axios.get('/api/tasks')
-            .then((response) => {
-                if (response.data.length > 0) {
-                    this.tasks = response.data;
-                    this.disableEditionOfTasks();
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                alert("Error");
-            })
-        },
-        updateTask(taskId, index) {
-            axios.put('/api/tasks/' + taskId, this.tasks[index])
-                .then(() => {
-                    this.getTasks();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert("Error");
-                })
-        }
-    }
-}
-</script>
