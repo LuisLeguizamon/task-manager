@@ -87,13 +87,13 @@ onCreate();
 <template>
     <div class="max-w-7xl mx-auto text-center">
         <input v-model="form.name" name="name" type="text" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-5 py-2.5 mr-2 mb-2">
+                class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
         <button 
             @click="addTask()"
             :disabled="disableAddTask"
             :class="{ 'opacity-50': disableAddTask }"
-            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Add Task
+            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+            Add task
         </button>
     </div>
     <div class="sm:flex min-h-screen pt-5">
