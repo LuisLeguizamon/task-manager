@@ -87,13 +87,13 @@ onCreate();
 <template>
     <div class="max-w-7xl mx-auto text-center">
         <input v-model="form.name" name="name" type="text" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-5 py-2.5 mr-2 mb-2">
+                class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
         <button 
             @click="addTask()"
             :disabled="disableAddTask"
             :class="{ 'opacity-50': disableAddTask }"
-            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Add Task
+            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+            Add task
         </button>
     </div>
     <div class="sm:flex min-h-screen pt-5">
@@ -101,14 +101,14 @@ onCreate();
             <li v-for="(task, index) in tasks"
                 ref="editInputRefs"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
-                        hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
+                        hover:bg-sky-50 transition duration-300 ease-in-out">
                 <p class="text-left">
                     <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                         {{ task.priority }}
                     </span>
                 </p>
 
-                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center w-full">
                 <span v-else>{{ task.name }}</span>
 
                 <div class="mt-5 grid grid-cols-12">
