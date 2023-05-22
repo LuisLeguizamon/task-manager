@@ -1,3 +1,81 @@
+<script setup>
+import axios from 'axios';
+import { ref, watch } from 'vue';
+
+const disableAddTask = ref(true);
+const form = ref({});
+const tasks = ref(null);
+
+watch(form.value, (newValue) => {
+    disableAddTask.value = !(newValue.name && newValue.name.trim());
+})
+
+function addTask() {
+    axios.post('/api/tasks', form.value)
+        .then(() => {
+            getTasks();
+            form.value.name = null;
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        });
+};
+
+function allowEdition(index) {
+    disableEditionOfTasks();
+    tasks.value[index].edit_item = true;
+};
+
+function deleteItem(taskId) {
+    axios.delete('/api/tasks/' + taskId)
+        .then(() => {
+            getTasks();
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+};
+
+function disableEditionOfTasks() {
+    tasks.value.forEach((task) => {
+        task.edit_item = false;
+    })
+};
+
+function getTasks() {
+    axios.get('/api/tasks')
+        .then((response) => {
+            if (response.data.length > 0) {
+                tasks.value = response.data;
+                disableEditionOfTasks();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+};
+
+function updateTask(taskId, index) {
+    axios.put('/api/tasks/' + taskId, tasks.value[index])
+        .then(() => {
+            getTasks();
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+}
+
+function onCreate() {
+    getTasks();
+}
+
+onCreate();
+</script>
+
 <template>
     <div class="max-w-7xl mx-auto text-center">
         <input v-model="form.name" name="name" type="text" required
@@ -54,79 +132,3 @@
         </div>
     </div>
 </template>
-<script>
-import axios from 'axios';
-
-export default {
-    data() {
-        return {
-            disableAddTask: true,
-            form: {},
-            tasks: null,
-        }
-    },
-    watch: {
-        'form.name'(newValue) {
-            this.disableAddTask = !(newValue && newValue.trim());
-        }
-    },
-    created() {
-        this.getTasks();
-    },
-    methods: {
-        addTask() {
-            axios.post('/api/tasks', this.form)
-                    .then(() => {
-                        this.getTasks();
-                        this.form.name = null;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        alert("Error");
-                    });
-        },
-        allowEdition(index) {
-            this.disableEditionOfTasks();
-            this.tasks[index].edit_item = true;
-        },
-        deleteItem(taskId) {
-            axios.delete('/api/tasks/' + taskId)
-                .then(() => {
-                    this.getTasks();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert("Error");
-                })
-        },
-        disableEditionOfTasks() {
-            this.tasks.forEach((task) => {
-                task.edit_item = false;
-            })
-        },
-        getTasks() {
-            axios.get('/api/tasks')
-            .then((response) => {
-                if (response.data.length > 0) {
-                    this.tasks = response.data;
-                    this.disableEditionOfTasks();
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                alert("Error");
-            })
-        },
-        updateTask(taskId, index) {
-            axios.put('/api/tasks/' + taskId, this.tasks[index])
-                .then(() => {
-                    this.getTasks();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert("Error");
-                })
-        }
-    }
-}
-</script>
