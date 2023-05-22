@@ -108,7 +108,7 @@ onCreate();
                     </span>
                 </p>
 
-                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center w-full">
                 <span v-else>{{ task.name }}</span>
 
                 <div class="mt-5 grid grid-cols-12">
