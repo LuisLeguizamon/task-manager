@@ -62,8 +62,6 @@ const disableAddTask = ref(true);
 const form = ref({});
 const tasks = ref(null);
 
-getTasks();
-
 watch(form.value, (newValue) => {
     disableAddTask.value = !(newValue.name && newValue.name.trim());
 })
@@ -126,4 +124,10 @@ function updateTask(taskId, index) {
             alert("Error");
         })
 }
+
+function onCreate() {
+    getTasks();
+}
+
+onCreate();
 </script>
