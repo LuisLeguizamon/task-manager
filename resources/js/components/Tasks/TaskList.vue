@@ -1,8 +1,9 @@
 <script setup>
 import axios from 'axios';
-import { ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 
 const disableAddTask = ref(true);
+const editInputRefs = ref([]);
 const form = ref({});
 const tasks = ref(null);
 
@@ -25,7 +26,14 @@ function addTask() {
 function allowEdition(index) {
     disableEditionOfTasks();
     tasks.value[index].edit_item = true;
+    focusItem(index);
 };
+
+async function focusItem(index)
+{
+    await nextTick();//need to use this utility to wait that the element with v-if (the edit input) is "updated" in DOM
+    editInputRefs.value[index].children[1].focus();//the second element (children[1]) is the edit input
+}
 
 function deleteItem(taskId) {
     axios.delete('/api/tasks/' + taskId)
@@ -91,6 +99,7 @@ onCreate();
     <div class="sm:flex min-h-screen pt-5">
         <ul v-if="tasks" class="max-w-7xl mx-auto">
             <li v-for="(task, index) in tasks"
+                ref="editInputRefs"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-full
                         hover:bg-sky-400 hover:text-white transition duration-300 ease-in-out">
                 <p class="text-left">
@@ -99,7 +108,7 @@ onCreate();
                     </span>
                 </p>
 
-                <input v-if="task.edit_item" autofocus type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
+                <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center">
                 <span v-else>{{ task.name }}</span>
 
                 <div class="mt-5 grid grid-cols-12">
