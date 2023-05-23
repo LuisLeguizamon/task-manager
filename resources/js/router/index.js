@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import TaskList from '../components/Tasks/TaskList.vue';
+import Tasks from '../components/Tasks/Tasks.vue';
 
 const routes = [
     {
         path: "/tasks",
-        component: TaskList
+        component: Tasks
     },
 ];
 
