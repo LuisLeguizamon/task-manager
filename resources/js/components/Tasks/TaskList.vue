@@ -1,27 +1,10 @@
 <script setup>
 import axios from 'axios';
-import { nextTick, ref, watch } from 'vue';
+import { nextTick, ref } from 'vue';
+import AddTask from './partials/AddTask.vue';
 
-const disableAddTask = ref(true);
 const editInputRefs = ref([]);
-const form = ref({});
 const tasks = ref(null);
-
-watch(form.value, (newValue) => {
-    disableAddTask.value = !(newValue.name && newValue.name.trim());
-})
-
-function addTask() {
-    axios.post('/api/tasks', form.value)
-        .then(() => {
-            getTasks();
-            form.value.name = null;
-        })
-        .catch((error) => {
-            console.log(error);
-            alert("Error");
-        });
-};
 
 function allowEdition(index) {
     disableEditionOfTasks();
@@ -86,15 +69,7 @@ onCreate();
 
 <template>
     <div class="max-w-7xl mx-auto text-center">
-        <input v-model="form.name" name="name" type="text" required
-                class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
-        <button 
-            @click="addTask()"
-            :disabled="disableAddTask"
-            :class="{ 'opacity-50': disableAddTask }"
-            class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Add task
-        </button>
+        <AddTask @add-task="getTasks"></AddTask>
     </div>
     <div class="sm:flex min-h-screen pt-5">
         <ul v-if="tasks" class="max-w-7xl mx-auto">
