@@ -11,7 +11,14 @@ const editInputRefs = ref([]);
 
 // Check task
 function checkTask(taskId) {
-    alert("mark as completed " + taskId)
+    axios.put('/api/tasks/complete/' + taskId, )
+        .then(() => {
+            emit('task-updated');
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
 }
 
 // Edit task
