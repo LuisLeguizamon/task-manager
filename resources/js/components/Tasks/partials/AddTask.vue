@@ -1,9 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const emit = defineEmits(['add-task']);
 const disableAddTask = ref(true);
 const form = ref({});
+
+const textLengthWarning = computed(() => {
+    let textTask = `${form.value.name}`;
+    if (textTask.length > 20) {
+        return 'Text too long';
+    }
+})
 
 watch(form.value, (newValue) => {
     disableAddTask.value = !(newValue.name && newValue.name.trim());
@@ -28,7 +35,7 @@ function addTask() {
         type="text"
         required
         class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
-
+    <h1>{{ textLengthWarning }}</h1>
     <button
         @click="addTask()"
         :disabled="disableAddTask"
