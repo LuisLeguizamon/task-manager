@@ -9,10 +9,10 @@ class CreateTask
 {
     public function execute(array $validated): void
     {
-        TaskHelper::sortTasks();
         $task = new Task();
         $task->name = $validated['name'];
-        $task->priority = 1;
+        $task->priority = 0;
         $task->save();
+        TaskHelper::sortTasks();
     }
 }
