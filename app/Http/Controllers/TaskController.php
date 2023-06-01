@@ -8,6 +8,8 @@ use App\Models\Task;
 use App\Services\Task\CreateTask;
 use App\Services\Task\DeleteTask;
 use App\Services\Task\UpdateTask;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -32,7 +34,15 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        app(CreateTask::class)->execute($request->validated());
+        DB::beginTransaction();
+        try {
+            app(CreateTask::class)->execute($request->validated());
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error($th);
+            return response()->json(['error' => true]);
+        }
 
         return response()->json(['error' => false]);
     }
@@ -68,7 +78,15 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        app(DeleteTask::class)->execute($task);
+        DB::beginTransaction();
+        try {
+            app(DeleteTask::class)->execute($task);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error($th);
+            return response()->json(['error' => true]);
+        }
 
         return response()->json(['error' => false]);
     }

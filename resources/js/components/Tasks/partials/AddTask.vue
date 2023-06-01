@@ -1,9 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const emit = defineEmits(['add-task']);
 const disableAddTask = ref(true);
 const form = ref({});
+
+const textLengthWarning = computed(() => {
+    let textTask = `${form.value.name}`;
+    if (textTask.length > 20) {
+        return 'Text too long';
+    }
+})
 
 watch(form.value, (newValue) => {
     disableAddTask.value = !(newValue.name && newValue.name.trim());
@@ -11,9 +18,13 @@ watch(form.value, (newValue) => {
 
 function addTask() {
     axios.post('/api/tasks', form.value)
-        .then(() => {
-            emit('add-task');
-            form.value.name = null;
+        .then((response) => {
+            if (response.data.error) {
+                alert("Error");
+            } else {
+                emit('add-task');
+                form.value.name = null;
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -28,7 +39,7 @@ function addTask() {
         type="text"
         required
         class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
-
+    <h1>{{ textLengthWarning }}</h1>
     <button
         @click="addTask()"
         :disabled="disableAddTask"

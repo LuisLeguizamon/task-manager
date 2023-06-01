@@ -23,8 +23,12 @@ async function focusItem(index)
 
 function deleteItem(taskId) {
     axios.delete('/api/tasks/' + taskId)
-        .then(() => {
-            emit('task-deleted');
+        .then((response) => {
+            if (response.data.error) {
+                alert("Error");
+            } else {
+                emit('task-deleted');
+            }
         })
         .catch((error) => {
             console.log(error);
