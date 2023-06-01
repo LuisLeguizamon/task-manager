@@ -82,19 +82,22 @@ function disableEditionOfTasks() {
             </p>
 
             <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center w-full">
-            <span v-else>{{ task.name }}</span>
+            <span v-else :class="task.completed ? 'text-gray-400' : 'text-black'">{{ task.name }}</span>
 
             <div class="mt-5 grid grid-cols-7">
                 <!-- Check task -->
                 <div class="my-auto text-left">
                     <button @click="checkTask(task.id)">
-                        <svg class="w-8 h-8 mx-auto hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <svg v-if="!task.completed" class="w-8 h-8 mx-auto hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z"></path>
+                        </svg>
+                        <svg v-else class="w-8 h-8 mx-auto text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </button>
                 </div>
                 <!-- Edit task -->
-                <div class="my-auto col-span-5 text-right">
+                <div class="my-auto col-span-5 text-right" v-if="!task.completed">
                     <button v-if="task.edit_item"
                             @click="updateTask(task.id, index)"
                             class="border border-none text-white bg-blue-950 hover:bg-blue-900 font-medium px-3 py-1">
@@ -108,7 +111,7 @@ function disableEditionOfTasks() {
                     </button>
                 </div>
                 <!-- Delete task -->
-                <div class="my-auto text-right">
+                <div class="my-auto text-right" v-if="!task.completed">
                     <button @click="deleteTask(task.id)">
                         <svg
                             class="w-4 h-4 mx-auto text-red-500 hover:text-red-900" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
