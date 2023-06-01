@@ -2,6 +2,7 @@
 
 namespace App\Services\Task;
 
+use App\Helpers\TaskHelper;
 use App\Models\Task;
 
 class CompleteTask
@@ -13,5 +14,6 @@ class CompleteTask
     {
         $task->completed = !$task->completed;
         $task->save();
+        TaskHelper::sortTasks();
     }
 }
