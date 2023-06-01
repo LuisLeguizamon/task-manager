@@ -21,6 +21,10 @@ async function focusItem(index)
     editInputRefs.value[index].children[1].focus();//the second element (children[1]) is the edit input
 }
 
+function checkTask(taskId) {
+    alert("mark as completed " + taskId)
+}
+
 function deleteItem(taskId) {
     axios.delete('/api/tasks/' + taskId)
         .then((response) => {
@@ -69,8 +73,17 @@ function updateTask(taskId, index) {
             <input v-if="tasks[index].edit_item" type="text" v-model="tasks[index].name" class="bg-slate-100 text-black text-center w-full">
             <span v-else>{{ task.name }}</span>
 
-            <div class="mt-5 grid grid-cols-12">
-                <div class="my-auto">
+            <div class="mt-5 grid grid-cols-7">
+                <!-- Check task -->
+                <div class="my-auto text-left">
+                    <button @click="checkTask(task.id)">
+                        <svg class="w-8 h-8 mx-auto hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Edit task -->
+                <div class="my-auto col-span-5 text-right">
                     <button v-if="task.edit_item"
                             @click="updateTask(task.id, index)"
                             class="border border-none text-white bg-blue-950 hover:bg-blue-900 font-medium px-3 py-1">
@@ -80,10 +93,11 @@ function updateTask(taskId, index) {
                             @click="allowEdition(index)">
                         <svg class="w-4 h-4 mx-auto hover:text-gray-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
-                            </svg>
+                        </svg>
                     </button>
                 </div>
-                <div class="my-auto border border-none rounded-lg p-2">
+                <!-- Delete task -->
+                <div class="my-auto text-right">
                     <button @click="deleteItem(task.id)">
                         <svg
                             class="w-4 h-4 mx-auto text-red-500 hover:text-red-900" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
