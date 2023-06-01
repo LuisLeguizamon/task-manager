@@ -18,9 +18,13 @@ watch(form.value, (newValue) => {
 
 function addTask() {
     axios.post('/api/tasks', form.value)
-        .then(() => {
-            emit('add-task');
-            form.value.name = null;
+        .then((response) => {
+            if (response.data.error) {
+                alert("Error");
+            } else {
+                emit('add-task');
+                form.value.name = null;
+            }
         })
         .catch((error) => {
             console.log(error);
