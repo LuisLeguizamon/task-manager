@@ -75,7 +75,8 @@ function disableEditionOfTasks() {
             ref="editInputRefs"
             class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-96 truncate
                     hover:bg-sky-50 transition duration-300 ease-in-out">
-            <p class="text-left">
+            
+            <p class="text-left" v-if="!task.completed">
                 <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                     {{ task.priority }}
                 </span>
