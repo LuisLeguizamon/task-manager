@@ -8,10 +8,12 @@ class TaskHelper
 {
     public static function sortTasks()
     {
-        $tasks = Task::all();
+        $tasks = Task::all()->sortBy('priority');
+        $i = 2;
         foreach ($tasks as $task) {
-            $task->priority = $task->priority + 1;
+            $task->priority = $i;
             $task->save();
+            $i++;
         }
     }
 }
