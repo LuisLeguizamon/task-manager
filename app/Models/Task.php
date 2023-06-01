@@ -8,6 +8,15 @@ class Task extends Model
 {
     public static function getTasksOrdered()
     {
-        return self::orderBy('priority', 'asc')->get();
+        $grouped = self::orderBy('priority', 'asc')->get()->groupBy(function(Task $task, int $key) {
+            if ($task->completed) {
+                return "complete";
+            }
+            else {
+                return "incomplete";
+            }
+        });
+
+        return $grouped;
     }
 }
