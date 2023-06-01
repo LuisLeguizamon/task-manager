@@ -12,6 +12,8 @@ function getTasks() {
             if (response.data.length > 0) {
                 tasks.value = response.data;
                 // disableEditionOfTasks();//comunicate to list component
+            } else {
+                tasks.value = null;
             }
         })
         .catch((error) => {
