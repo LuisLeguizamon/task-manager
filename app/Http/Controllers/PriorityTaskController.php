@@ -12,6 +12,7 @@ class PriorityTaskController extends Controller
      */
     public function update(Request $request)
     {
+        dd($request->all());
         app(UpdatePriority::class)->execute($request);
 
         return ["error" => false];
