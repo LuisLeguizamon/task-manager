@@ -89,17 +89,16 @@ function onDrop(event, index) {
 </script>
 <template>
     <ul class="max-w-7xl mx-auto">
-        <template v-for="(task, index) in tasks">
-            <p 
-                class="mb-5 p-5 bg-red-100"
-                @drop="onDrop($event, index + 1)"
-                @dragover.prevent
-                @dragenter.prevent>
-                Drop
-            </p>
+        <div 
+            v-for="(task, index) in tasks"
+            class="m-5 p-3 bg-slate-200"
+            @drop="onDrop($event, index + 1)"
+            @dragover.prevent
+            @dragenter.prevent>
+
             <li
                 ref="editInputRefs"
-                class="sortable-item bg-white border border-none drop-shadow-lg font-semibold mb-5 p-5 w-96 truncate
+                class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-96 truncate
                         hover:bg-sky-50 transition duration-300 ease-in-out"
                 draggable="true"
                 @dragstart="dragStart($event, task)">
@@ -150,6 +149,6 @@ function onDrop(event, index) {
                     </div>
                 </div>
             </li>
-        </template>
+        </div>
     </ul>
 </template>
