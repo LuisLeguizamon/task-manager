@@ -79,7 +79,7 @@ function onDrop(event, index) {
     axios.put('/api/tasks/priority/' + taskId, {'index': index})
         .then((response) => {
             console.log(response)
-            // emit('task-updated');
+            emit('task-updated');
         })
         .catch((error) => {
             console.log(error);
