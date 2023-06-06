@@ -7,7 +7,7 @@ const form = ref({});
 
 const textLengthWarning = computed(() => {
     let textTask = `${form.value.name}`;
-    if (textTask.length > 20) {
+    if (textTask.length > 80) {
         return 'Text too long';
     }
 })
