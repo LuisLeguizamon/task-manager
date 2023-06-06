@@ -11,11 +11,10 @@ class PriorityTaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function __invoke(Request $request, Task $task)
     {
         app(UpdatePriority::class)->execute($request, $task);
 
         return ["error" => false];
     }
-
 }
