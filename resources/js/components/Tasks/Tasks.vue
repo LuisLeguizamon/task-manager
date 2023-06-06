@@ -35,11 +35,11 @@ onCreate();
 </script>
 
 <template>
-    <div class="max-w-7xl mx-auto text-center">
+    <div class="max-w-7xl mx-auto text-center w-4/5">
         <AddTask @add-task="getTasks"></AddTask>
     </div>
     <!-- Incomplete Tasks -->
-    <div class="sm:flex screen pt-5">
+    <div class="sm:flex screen pt-5 mx-auto w-4/5">
         <TaskList 
             v-if="incompleteTasks"
             :tasks="incompleteTasks"

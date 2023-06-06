@@ -38,13 +38,13 @@ function addTask() {
         name="name"
         type="text"
         required
-        class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2">
+        class="bg-white border border-gray-300 text-sm px-5 py-2.5 mr-2 mb-2 w-full">
     <h1>{{ textLengthWarning }}</h1>
     <button
         @click="addTask()"
         :disabled="disableAddTask"
         :class="{ 'opacity-50': disableAddTask }"
-        class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+        class="border border-none text-white bg-blue-950 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none w-full">
         Add task
     </button>
 </template>
