@@ -8,6 +8,7 @@ const props = defineProps({
 const emit = defineEmits(['task-deleted', 'task-updated']);
 
 const editInputRefs = ref([]);
+const startDrag = ref(false);
 
 // Check task
 function checkTask(taskId) {
@@ -70,11 +71,15 @@ function disableEditionOfTasks() {
 
 // Drag and Drop
 function dragStart(event, task) {
+    startDrag.value = true;
     event.dataTransfer.setData('taskId', task.id);
 }
 
+function dragEnd() {
+    startDrag.value = false;
+}
+
 function onDrop(event, index) {
-    console.log("DROP******************")
     const taskId = event.dataTransfer.getData('taskId');
     axios.put('/api/tasks/priority/' + taskId, {'index': index})
         .then((response) => {
@@ -91,7 +96,8 @@ function onDrop(event, index) {
     <ul class="max-w-7xl mx-auto">
         <div 
             v-for="(task, index) in tasks"
-            class="m-5 p-3 bg-slate-200"
+            class="m-5 bg-slate-100"
+            :class="{ 'p-1': startDrag }"
             @drop="onDrop($event, index + 1)"
             @dragover.prevent
             @dragenter.prevent>
@@ -101,7 +107,8 @@ function onDrop(event, index) {
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-96 truncate
                         hover:bg-sky-50 transition duration-300 ease-in-out"
                 draggable="true"
-                @dragstart="dragStart($event, task)">
+                @dragstart="dragStart($event, task)"
+                @dragend="dragEnd()">
                 
                 <p class="text-left" v-if="!task.completed">
                     <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
