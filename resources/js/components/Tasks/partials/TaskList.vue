@@ -81,9 +81,12 @@ function dragEnd() {
 
 function onDrop(event, index) {
     const taskId = event.dataTransfer.getData('taskId');
+    const filteredTask = props.tasks.filter(obj => obj.id == taskId);
+    if (filteredTask[0].priority == index) {
+        return;
+    }
     axios.put('/api/tasks/priority/' + taskId, {'index': index})
         .then((response) => {
-            console.log(response)
             emit('task-updated');
         })
         .catch((error) => {
