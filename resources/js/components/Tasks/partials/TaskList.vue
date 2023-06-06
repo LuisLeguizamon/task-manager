@@ -79,7 +79,10 @@ function dragEnd() {
     startDrag.value = false;
 }
 
-function onDrop(event, index) {
+function onDrop(event, index, targetTask) {
+    if (targetTask.completed == 1) {
+        return;
+    }
     const taskId = event.dataTransfer.getData('taskId');
     const filteredTask = props.tasks.filter(obj => obj.id == taskId);
     if (filteredTask[0].priority == index) {
@@ -101,15 +104,15 @@ function onDrop(event, index) {
             v-for="(task, index) in tasks"
             class="m-5 bg-slate-100"
             :class="{ 'p-1': startDrag }"
-            @drop="onDrop($event, index + 1)"
-            @dragover.prevent
-            @dragenter.prevent>
+            @drop="onDrop($event, index + 1, task)"
+            @dragover.prevent="false"
+            @dragenter.prevent="false">
 
             <li
                 ref="editInputRefs"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-96 truncate
                         hover:bg-sky-50 transition duration-300 ease-in-out"
-                draggable="true"
+                :draggable="task.completed == 0 ? true : false"
                 @dragstart="dragStart($event, task)"
                 @dragend="dragEnd()">
                 
