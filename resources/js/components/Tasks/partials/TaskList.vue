@@ -99,10 +99,10 @@ function onDrop(event, index, targetTask) {
 }
 </script>
 <template>
-    <ul class="max-w-7xl mx-auto">
+    <ul class="max-w-7xl mx-auto w-full">
         <div 
             v-for="(task, index) in tasks"
-            class="m-5 bg-slate-100"
+            class="my-5 bg-slate-100"
             :class="{ 'p-1': startDrag }"
             @drop="onDrop($event, index + 1, task)"
             @dragover.prevent="false"
@@ -110,7 +110,7 @@ function onDrop(event, index, targetTask) {
 
             <li
                 ref="editInputRefs"
-                class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-96 truncate
+                class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-full truncate
                         hover:bg-sky-50 transition duration-300 ease-in-out"
                 :draggable="task.completed == 0 ? true : false"
                 @dragstart="dragStart($event, task)"
