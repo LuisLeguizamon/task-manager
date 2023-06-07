@@ -9,7 +9,7 @@ const emit = defineEmits(['task-deleted', 'task-updated']);
 
 const editInputRefs = ref([]);
 const startDrag = ref(false);
-
+const indexDragEnter = ref(null);
 // Check task
 function checkTask(taskId) {
     axios.put('/api/tasks/complete/' + taskId, )
@@ -79,7 +79,19 @@ function dragEnd() {
     startDrag.value = false;
 }
 
+function onDragEnter(event, index) {
+    event.preventDefault();
+    indexDragEnter.value = index;
+}
+
+function getClassOnDragEnter(index) {
+    if (indexDragEnter.value == index) {
+        return 'bg-slate-100';
+    }
+}
+
 function onDrop(event, index, targetTask) {
+    indexDragEnter.value = null;
     if (targetTask.completed == 1) {
         return;
     }
@@ -105,13 +117,14 @@ function onDrop(event, index, targetTask) {
             class="my-5 bg-slate-100"
             :class="{ 'p-1': startDrag }"
             @drop="onDrop($event, index + 1, task)"
-            @dragover.prevent="false"
-            @dragenter.prevent="false">
+            @dragenter="onDragEnter($event, index)"
+            @dragover.prevent="false">
 
             <li
                 ref="editInputRefs"
                 class="sortable-item bg-white border border-none drop-shadow-lg font-semibold p-5 w-full truncate
                         hover:bg-sky-50 transition duration-300 ease-in-out"
+                :class="getClassOnDragEnter(index)"
                 :draggable="task.completed == 0 ? true : false"
                 @dragstart="dragStart($event, task)"
                 @dragend="dragEnd()">
