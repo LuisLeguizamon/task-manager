@@ -29,4 +29,22 @@ class TaskTest extends TestCase
 
         $this->assertTrue($newTask->exists());
     }
+
+    public function test_tasks_can_be_updated(): void
+    {
+        $task = new Task;
+        $task->name = 'Task Test';
+        $task->priority = 1;
+        $task->save();
+
+        $url = route('tasks.update', $task->id);
+
+        $editForm = ['name' => 'Task Test Edit'];
+
+        $this->put($url, $editForm);
+
+        $task->refresh();
+
+        $this->assertTrue($task->name == 'Task Test Edit');
+    }
 }
