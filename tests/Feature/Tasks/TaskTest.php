@@ -47,4 +47,17 @@ class TaskTest extends TestCase
 
         $this->assertTrue($task->name == 'Task Test Edit');
     }
+
+    public function test_tasks_can_be_deleted(): void
+    {
+        $task = new Task;
+        $task->name = 'Task Test';
+        $task->priority = 1;
+        $task->save();
+
+        $url = route('tasks.destroy', $task->id);
+        $this->delete($url);
+
+        $this->assertFalse(Task::where('name', 'Task Test')->where('priority', 1)->exists());
+    }
 }
