@@ -1,0 +1,32 @@
+version: '3'
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - database
+
+  #MySQL Service
+  database:
+    image: mysql:8.0
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql-8.0
+    volumes:
+      - mysql_8_volume:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+
+#Volumes
+volumes:
+  mysql_8_volume:
+    driver: local
