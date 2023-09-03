@@ -51,11 +51,11 @@ onCreate();
         </div>
     </div>
     <!-- Complete Tasks -->
-    <!-- <div class="sm:flex min-h-screen pt-5 mx-auto w-4/5">
+    <div class="pt-5 mx-5">
         <TaskList 
             v-if="completeTasks"
             :tasks="completeTasks"
             @task-updated="getTasks">
         </TaskList>
-    </div> -->
+    </div>
 </template>
