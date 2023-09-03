@@ -24,7 +24,7 @@ function checkTask(taskId) {
         :class="{'bg-gray-50': task.completed}"
         v-for="task in props.tasks">
         <div class="flex items-center">
-            <span class="" v-if="!task.completed">
+            <span v-if="!task.completed">
                 <CircleIcon @click="checkTask(task.id)" />
             </span>
             <span class="ml-5" :class="{'text-gray-400 line-through': task.completed}">
