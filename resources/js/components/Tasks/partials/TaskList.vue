@@ -1,5 +1,6 @@
 <script setup>
 import CircleIcon from '../../CircleIcon.vue';
+import { checkTask } from '../../../services/TaskService';
 
 const props = defineProps({
     tasks: Array,
@@ -8,15 +9,8 @@ const props = defineProps({
 const emit = defineEmits(['task-updated']);
 
 // Check task
-function checkTask(taskId) {
-    axios.put('/api/tasks/complete/' + taskId,)
-        .then(() => {
-            emit('task-updated');
-        })
-        .catch((error) => {
-            console.log(error);
-            alert("Error");
-        })
+function checkTaskWrapper(taskId) {
+  checkTask(taskId, emit);
 }
 </script>
 <template>
@@ -25,7 +19,7 @@ function checkTask(taskId) {
         v-for="task in props.tasks">
         <div class="flex items-center">
             <span v-if="!task.completed">
-                <CircleIcon @click="checkTask(task.id)" />
+                <CircleIcon @click="checkTaskWrapper(task.id)" />
             </span>
             <span class="ml-5" :class="{'text-gray-400 line-through': task.completed}">
                 {{ task.name }}
