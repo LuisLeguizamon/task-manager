@@ -39,12 +39,25 @@ function showModal(task) {
             </span>
         </div>
     </div>
-    <EditTaskModal 
-        v-if="showEditTaskModal"
-        :task="taskSelected"
-        @task-updated="showEditTaskModal = false"
-        @close-modal="showEditTaskModal = false"
-    >
-    </EditTaskModal>
+    <Transition>
+        <EditTaskModal 
+            v-if="showEditTaskModal"
+            :task="taskSelected"
+            @task-updated="showEditTaskModal = false"
+            @close-modal="showEditTaskModal = false"
+        >
+        </EditTaskModal>
+    </Transition>
     
 </template>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>
