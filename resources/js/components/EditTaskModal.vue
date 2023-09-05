@@ -1,9 +1,28 @@
 <script setup>
-const props = defineProps({
-    task: Object
-});
+import { watch } from 'vue';
 
+const props = defineProps({
+    show: {
+        type: Boolean,
+        default: false,
+    },
+    task: {
+        type: Object,
+        default: {
+            'id': null,
+            'name': null
+        }
+    },
+});
 const emit = defineEmits(['task-updated', 'close-modal']);
+
+watch(() => props.show, () => {
+    if (props.show) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = null;
+    }
+});
 
 function updateTask() {
     const taskUpdated = {
@@ -23,7 +42,7 @@ function updateTask() {
 </script>
 <template>
     <!-- Main modal -->
-    <div id="defaultModal" tabindex="-1" aria-hidden="true"
+    <div v-show="show" id="defaultModal" tabindex="-1" aria-hidden="true"
         class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full">
             <!-- Modal content -->

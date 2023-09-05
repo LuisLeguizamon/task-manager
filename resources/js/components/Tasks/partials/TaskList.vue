@@ -11,7 +11,10 @@ const props = defineProps({
 const emit = defineEmits(['task-updated']);
 
 const showEditTaskModal = ref(false);
-const taskSelected = ref(null);
+const taskSelected = ref({
+    'id': null,
+    'name': null
+});
 
 // Check task
 function checkTaskWrapper(taskId) {
@@ -40,8 +43,8 @@ function showModal(task) {
         </div>
     </div>
     <Transition>
-        <EditTaskModal 
-            v-if="showEditTaskModal"
+        <EditTaskModal
+            :show="showEditTaskModal"
             :task="taskSelected"
             @task-updated="showEditTaskModal = false"
             @close-modal="showEditTaskModal = false"
