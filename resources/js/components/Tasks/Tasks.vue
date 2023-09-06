@@ -43,6 +43,7 @@ onCreate();
         <TaskList 
             v-if="incompleteTasks"
             :tasks="incompleteTasks"
+            :incomplete-tasks="true"
             @task-deleted="getTasks"
             @task-updated="getTasks">
         </TaskList>
@@ -55,6 +56,7 @@ onCreate();
         <TaskList 
             v-if="completeTasks"
             :tasks="completeTasks"
+            :incomplete-tasks="false"
             @task-updated="getTasks">
         </TaskList>
     </div>

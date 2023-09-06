@@ -5,6 +5,7 @@ import EditTaskModal from '../../EditTaskModal.vue';
 import { checkTask } from '../../../services/TaskService';
 
 const props = defineProps({
+    incompleteTasks: Boolean,
     tasks: Array,
 });
 
@@ -46,15 +47,17 @@ function taskUpdated() {
             </span>
         </div>
     </div>
-    <Transition>
-        <EditTaskModal
-            :show="showEditTaskModal"
-            :task="taskSelected"
-            @task-updated="taskUpdated()"
-            @close-modal="showEditTaskModal = false"
-        >
-        </EditTaskModal>
-    </Transition>
+    <template v-if="incompleteTasks">
+        <Transition>
+            <EditTaskModal
+                :show="showEditTaskModal"
+                :task="taskSelected"
+                @task-updated="taskUpdated()"
+                @close-modal="showEditTaskModal = false"
+            >
+            </EditTaskModal>
+        </Transition>
+    </template>
     
 </template>
 <style scoped>
