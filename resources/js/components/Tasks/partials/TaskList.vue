@@ -22,10 +22,14 @@ function checkTaskWrapper(taskId) {
 }
 
 function showModal(task) {
-    taskSelected.value = task;
+    taskSelected.value = JSON.parse(JSON.stringify(task));
     showEditTaskModal.value = true;
 }
 
+function taskUpdated() {
+    showEditTaskModal.value = false;
+    emit('task-updated');
+}
 </script>
 <template>
     <div class="bg-white drop-shadow-md rounded mb-5 px-3 py-5"
@@ -46,7 +50,7 @@ function showModal(task) {
         <EditTaskModal
             :show="showEditTaskModal"
             :task="taskSelected"
-            @task-updated="showEditTaskModal = false"
+            @task-updated="taskUpdated()"
             @close-modal="showEditTaskModal = false"
         >
         </EditTaskModal>
