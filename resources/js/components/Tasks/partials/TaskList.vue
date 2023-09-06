@@ -23,8 +23,10 @@ function checkTaskWrapper(taskId) {
 }
 
 function showModal(task) {
-    taskSelected.value = JSON.parse(JSON.stringify(task));
-    showEditTaskModal.value = true;
+    if (props.incompleteTasks) {
+        taskSelected.value = JSON.parse(JSON.stringify(task));
+        showEditTaskModal.value = true;
+    }
 }
 
 function taskUpdated() {
