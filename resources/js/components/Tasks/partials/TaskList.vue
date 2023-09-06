@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import CircleIcon from '../../CircleIcon.vue';
 import EditTaskModal from '../../EditTaskModal.vue';
 import { checkTask } from '../../../services/TaskService';
@@ -33,10 +33,14 @@ function taskUpdated() {
     showEditTaskModal.value = false;
     emit('task-updated');
 }
+
+const customClass = computed(() => {
+    return props.incompleteTasks ? 'drop-shadow-md' : 'bg-gray-50'
+})
 </script>
 <template>
-    <div class="bg-white drop-shadow-md rounded mb-5 px-3 py-5"
-        :class="{'bg-gray-50': task.completed}"
+    <div class="bg-white rounded mb-5 px-3 py-5"
+        :class="customClass"
         v-for="task in props.tasks">
         <div class="flex items-center">
             <span v-if="!task.completed">
