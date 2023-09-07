@@ -9,7 +9,7 @@ const props = defineProps({
     tasks: Array,
 });
 
-const emit = defineEmits(['task-updated']);
+const emit = defineEmits(['task-updated', 'task-deleted']);
 
 const showEditTaskModal = ref(false);
 const taskSelected = ref({
@@ -32,6 +32,11 @@ function showModal(task) {
 function taskUpdated() {
     showEditTaskModal.value = false;
     emit('task-updated');
+}
+
+function taskDeleted() {
+    showEditTaskModal.value = false;
+    emit('task-deleted');
 }
 
 const customClass = computed(() => {
@@ -59,6 +64,7 @@ const customClass = computed(() => {
                 :show="showEditTaskModal"
                 :task="taskSelected"
                 @task-updated="taskUpdated()"
+                @task-deleted="taskDeleted()"
                 @close-modal="showEditTaskModal = false"
             >
             </EditTaskModal>

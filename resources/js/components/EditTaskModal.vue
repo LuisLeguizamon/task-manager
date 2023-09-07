@@ -14,7 +14,7 @@ const props = defineProps({
         }
     },
 });
-const emit = defineEmits(['task-updated', 'close-modal']);
+const emit = defineEmits(['task-updated', 'task-deleted', 'close-modal']);
 
 watch(() => props.show, () => {
     if (props.show) {
@@ -39,6 +39,22 @@ function updateTask() {
             alert("Error");
         })
 }
+
+// Delete task
+function deleteTask(taskId) {
+    axios.delete('/api/tasks/' + taskId)
+        .then((response) => {
+            if (response.data.error) {
+                alert("Error");
+            } else {
+                emit('task-deleted');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Error");
+        })
+};
 </script>
 <template>
     <!-- Main modal -->
@@ -71,7 +87,7 @@ function updateTask() {
                         <input type="text" v-model="task.name">
                     </div>
                     <!-- Modal footer -->
-                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div class="flex p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button
                             @click="updateTask()"
                             class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-sm text-white tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
@@ -81,6 +97,11 @@ function updateTask() {
                             @click="emit('close-modal')"
                             class="inline-flex items-center px-4 py-2 bg-white border border-gray-200 rounded-md font-semibold text-sm text-gray-500 tracking-widest hover:bg-gray-100 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                             Cancel
+                        </button>
+                        <button
+                            @click="deleteTask(task.id)"
+                            class="inline-flex items-end px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white tracking-widest hover:bg-red-500 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                            Delete
                         </button>
                     </div>
                 </div>
