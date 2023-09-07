@@ -39,10 +39,11 @@ onCreate();
         <AddTask @add-task="getTasks"></AddTask>
     </div>
     <!-- Incomplete Tasks -->
-    <div class="sm:flex screen pt-5 mx-auto w-4/5">
+    <div class="pt-5 mx-5">
         <TaskList 
             v-if="incompleteTasks"
             :tasks="incompleteTasks"
+            :incomplete-tasks="true"
             @task-deleted="getTasks"
             @task-updated="getTasks">
         </TaskList>
@@ -51,10 +52,11 @@ onCreate();
         </div>
     </div>
     <!-- Complete Tasks -->
-    <div class="sm:flex min-h-screen pt-5 mx-auto w-4/5">
+    <div class="pt-5 mx-5">
         <TaskList 
             v-if="completeTasks"
             :tasks="completeTasks"
+            :incomplete-tasks="false"
             @task-updated="getTasks">
         </TaskList>
     </div>
