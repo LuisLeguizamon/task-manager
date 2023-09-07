@@ -35,20 +35,20 @@ function taskUpdated() {
 }
 
 const customClass = computed(() => {
-    return props.incompleteTasks ? 'drop-shadow-md' : 'bg-gray-50'
+    return props.incompleteTasks ? 'drop-shadow-md hover:cursor-pointer' : 'bg-gray-50'
 })
 </script>
 <template>
-    <div class="bg-white rounded mb-5 px-3 py-5"
+    <div class="bg-white rounded mb-5 px-3 py-5 hover:bg-gray-50 transition-colors"
         :class="customClass"
-        v-for="task in props.tasks">
+        v-for="task in props.tasks" @click="showModal(task)">
         <div class="flex items-center">
             <span v-if="!task.completed">
                 <CircleIcon @click="checkTaskWrapper(task.id)" />
             </span>
-            <span class="ml-5 hover:cursor-pointer"
+            <span class="ml-5"
                 :class="{'text-gray-400 line-through': task.completed}"
-                @click="showModal(task)">
+                >
                 {{ task.name }}
             </span>
         </div>
